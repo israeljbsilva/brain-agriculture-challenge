@@ -50,3 +50,52 @@ O mesmo consiste em um cadastro de produtor rural com os seguintes dados:
 
 - O desenvolvedor full-stack deve realizar ambos, e concluir a integração.
   > Não envie a solução como anexo, suba os fontes para seu Github (ou outro repositório) e envie o link para o avaliador.
+
+
+## Ambiente de Desenvolvimento Local Linux
+
+### Preparando ambiente (Pyenv, VirtualEnv e Pipenv) ###
+Recomendando utilizar o Pyenv para instalar o Python na versão 3.9 e criar uma VirtualEnv com essa versão e dentro dela instalar o Pipenv para gerenciar as dependências do projeto.
+
+#### Instalação e utilização do Pyenv
+Segue o link com instruções: [instalar pyenv no ubuntu](https://gist.github.com/luzfcb/ef29561ff81e81e348ab7d6824e14404)
+
+#### Criação e ativação do Virtualenv
+Esteja na raiz do projeto e execute os seguintes comandos:
+* ```python -m venv .venv```
+* ``` source .venv/bin/activate```
+
+#### Instalação e utilização do Pipenv
+Esteja dentro da .venv e execute os seguintes comandos:
+* ```pip install --upgrade pip ```
+* ```pip install pipenv ```
+* ```pipenv install```
+
+#### Utilize a .env para secrets
+A gestão das variáveis de ambiente será feita pelo python-decouple.
+
+Copie o modelo de .env que existe na raiz.
+* ```cp env.example .env```
+
+
+## Ambiente de Desenvolvimento Docker
+
+### Instalação e atualização do Docker ###
+Para executar o projeto, é necessário que seu Docker seja compatível com o compose file 3.9. No Windows apenas baixando o Docker Desktop deve ser o suficiente, mas caso esteja usando Linux, recomendo que siga as seguintes [instruções](https://linuxhostsupport.com/blog/how-to-install-and-configure-docker-compose-on-ubuntu-20-04/)
+
+No caso da utilização do Docker as credenciais do banco devem seguir as mesmas do docker-compose.yml
+```bash
+DATABASE_NAME=db_challenge
+DATABASE_USER=user
+DATABASE_PASSWORD=password
+DATABASE_HOST=172.20.0.2 # IP do container do Postgres
+```
+
+#### Para fazer o build na primeira vez ou quando for alterado o Pipfile e Dockerfile
+* ```docker-compose build```
+
+#### Para subir o ambiente, execute o seguinte comando. E se caso queira parar o ambiente, utilize ctrl + c.
+* ```docker-compose up```
+
+#### Para derrubar o ambiente, execute o seguinte comando.
+* ```docker-compose down -v```

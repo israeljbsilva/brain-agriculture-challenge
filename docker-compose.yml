@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+    postgres:
+        image: postgres:15
+        environment:
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=db_challenge
+        volumes:
+            - postgres-db-volume:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+        networks:
+            - challenge-network
+    web:
+        build: .
+        command:
+            - bash
+            - -c
+            - "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        depends_on:
+            - postgres
+        networks:
+            - challenge-network
+
+volumes:
+    postgres-db-volume:
+
+networks:
+    challenge-network:
+        driver: bridge
